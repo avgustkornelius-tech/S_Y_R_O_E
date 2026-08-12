@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>СЫРОЕ — андеграунд из цеха</title>
+  <meta name="description" content="СЫРОЕ. Треки, биты, запись — напрямую из цеха. Андеграунд без глянца.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #ff4d4d;
+      --bg: #0f0f0f;
+      --card: #1a1a1a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: #fff; font-family: sans-serif; line-height: 1.5; }
+
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* HEADER */
+    header { padding: 24px 0; border-bottom: 1px solid #333; }
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; text-decoration: none; color: #fff; }
+    nav a { color: #aaa; text-decoration: none; margin-left: 20px; font-weight: 500; }
+    nav a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero { padding: 80px 0; text-align: center; }
+    .tag { color: #888; font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 1px; }
+    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: 64px; margin: 16px 0; }
+    .hero p { color: #ccc; max-width: 600px; margin: 0 auto 32px; }
+    .btn { display: inline-block; padding: 12px 28px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
+    .btn:hover { background: var(--accent); color: var(--bg); }
+    .btn-ghost { border-color: #555; color: #aaa; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
+
+    /* TRACKS GRID */
+    #tracks { padding: 60px 0; }
+    h2 { font-family: 'Bebas Neue', sans-serif; font-size: 40px; margin-bottom: 8px; }
+    .sub { color: #888; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 1px; margin-bottom: 32px; }
+    .grid-tracks { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+
+    /* FLIP CARD */
+    .flip-card { perspective: 1000px; width: 280px; height: 360px; position: relative; }
+    .flip-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back { position: absolute; top: 0; left: 0; backface-visibility: hidden; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
+    .flip-card-front { background: var(--card); color: white; }
+    .flip-card-back { background: var(--bg); color: var(--accent); transform: rotateY(180deg); }
+    .letter { font-family: 'Bebas Neue', sans-serif; font-size: 80px; line-height: 1; opacity: 0.15; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; pointer-events: none; }
+    .tag-small { color: #888; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; margin-top: 8px; }
+
+    /* LYRICS TOGGLE */
+    .lyrics {
+      max-height: 80px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 16px;
+      transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .lyrics::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      height: 40px;
+      background: linear-gradient(transparent, var(--bg));
+      pointer-events: none;
+    }
+    .lyrics.expanded { max-height: 500px; }
+    .lyrics.expanded::after { opacity: 0; }
+    .lyrics p { margin: 0; font-size: 15px; line-height: 1.4; }
+
+    .lyrics-toggle {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: transparent;
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.3s;
+      user-select: none;
+    }
+    .lyrics-toggle:hover { background: var(--accent); color: var(--bg); }
+
+    .price-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 16px; }
+    .price { font-family: 'IBM Plex Mono', monospace; font-weight: 700; color: var(--accent); }
+    .buy { color: #fff; text-decoration: none; border: 1px solid #444; padding: 8px 16px; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; font-size: 13px; transition: 0.3s; }
+    .buy:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* SERVICES & TSEH */
+    section { padding: 60px 0; }
+    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .service h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; margin-bottom: 8px; }
+    .service p { color: #aaa; margin-bottom: 16px; }
+    .principles li { margin: 6px 0; color: #666; }
+
+    footer { padding: 40px 0; border-top: 1px solid #333; text-align: center; color: #777; }
+    .socials a { color: #fff; margin: 0 10px; text-decoration: none; }
+    .socials a:hover { color: var(--accent); }
+
+    /* SCROLL ANIMATION */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <a href="#" class="logo">СЫР<b>О</b>Е</a>
+      <nav>
+        <a href="#tracks">Треки</a>
+        <a href="#services">Услуги</a>
+        <a href="#tseh">Цех</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="tag">// цех №1 · 2026</span>
+      <h1>СЫР<b>О</b>Е</h1>
+      <p>Андеграунд без глянца. Треки, биты, запись — напрямую из цеха. Честный звук без студийных финтов.</p>
+      <div class="cta">
+        <a href="#tracks" class="btn btn-primary">Слушать</a>
+        <a href="#services" class="btn btn-ghost">Заказать</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="tracks">
+    <div class="wrap">
+      <h2>Треки</h2>
+      <div class="sub">// наведи — перевернётся · купить на bandcamp</div>
+      <div class="grid-tracks">
+
+        <!-- КАРТОЧКА 1 -->
+        <div class="flip-card reveal reveal-delay-1">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="letter">Ц</div>
+              <h3>ЦЕХ</h3>
+              <span class="tag-small">жёсткий</span>
+            </div>
+            <div class="flip-card-back">
+              <h3>ЦЕХ</h3>
+              <div class="lyrics">
+                <p>«Здесь не пишут — здесь куют. Каждый такт как удар по металлу.»</p>
+              </div>
+              <button type="button" class="lyrics-toggle">Развернуть</button>
+              <div class="price-row">
+                <span class="price">100 ₽</span>
+                <a href="/tracks/ceh" class="buy">купить</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА 2 -->
+        <div class="flip-card reveal reveal-delay-2">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="letter">С</div>
+              <h3>СМЕНА ОКОНЧЕНА</h3>
+              <span class="tag-small">лирика</span>
+            </div>
+            <div class="flip-card-back">
+              <h3>СМЕНА ОКОНЧЕНА</h3>
+              <div class="lyrics">
+                <p>«Гудок. Замок. Фонарь натриевый. Дом — там, где не спрашивают.»</p>
+              </div>
+              <button type="button" class="lyrics-toggle">Развернуть</button>
+              <div class="price-row">
+                <span class="price">100 ₽</span>
+                <a href="/tracks/smena" class="buy">купить</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА 3 -->
+        <div class="flip-card reveal reveal-delay-3">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="letter">В</div>
+              <h3>ВОЛК</h3>
+              <span class="tag-small">брендовый</span>
+            </div>
+            <div class="flip-card-back">
+              <h3>ВОЛК</h3>
+              <div class="lyrics">
+                <p>«Я не вою на луну. Я работаю в темноте.»</p>
+              </div>
+              <button type="button" class="lyrics-toggle">Развернуть</button>
+              <div class="price-row">
+                <span class="price">100 ₽</span>
+                <a href="/tracks/volk" class="buy">купить</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА 4 -->
+        <div class="flip-card reveal reveal-delay-4">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="letter">П</div>
+              <h3>ПЛАСТИЛИН</h3>
+              <span class="tag-small">философский</span>
+            </div>
+            <div class="flip-card-back">
+              <h3>ПЛАСТИЛИН</h3>
+              <div class="lyrics">
+                <p>«Меня лепили руками чужими — я застыл как смог над районом.»</p>
+              </div>
+              <button type="button" class="lyrics-toggle">Развернуть</button>
+              <div class="price-row">
+                <span class="price">100 ₽</span>
+                <a href="/tracks/plastilin" class="buy">купить</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <h2>Услуги</h2>
+      <div class="sub">// работа на заказ · без посредников</div>
+      <div class="services">
+        <div class="service">
+          <h3>Бит под заказ</h3>
+          <p>Соберу бит под твой флоу. От сырого лоу-фая до жёсткого индастриала. Срок — от 2 дней.</p>
+          <div class="price-row">
+            <span class="price">от 2000 ₽</span>
+            <a href="/order/beat" class="buy">заказать</a>
+          </div>
+        </div>
+        <div class="service">
+          <h3>Фит</h3>
+          <p>Запишу куплет или хук на твой трек. Голос из короба — сухой, честный, без авто-тюна.</p>
+          <div class="price-row">
+            <span class="price">от 3000 ₽</span>
+            <a href="/order/feature" class="buy">заказать</a>
+          </div>
+        </div>
+        <div class="service">
+          <h3>Запись в коробе</h3>
+          <p>Привози текст — запишем дубль за дублем в моей кабине. Базовое сведение включено.</p>
+          <div class="price-row">
+            <span class="price">от 1500 ₽</span>
+            <a href="/order/record" class="buy">записаться</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tseh">
+    <div class="wrap">
+      <h2>Цех</h2>
+      <div class="sub">// манифест</

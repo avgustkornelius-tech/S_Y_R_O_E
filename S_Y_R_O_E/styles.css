@@ -1,0 +1,148 @@
+/* Кнопка раскрытия текста */
+.lyrics-toggle {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.lyrics-toggle:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Свёрнутый текст */
+.lyrics {
+  max-height: 180px;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.6s ease;
+}
+
+.lyrics.expanded {
+  max-height: 3000px;
+}
+
+/* Градиент затемнения снизу (эффект "текст продолжается") */
+.lyrics::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(transparent, var(--card));
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.lyrics.expanded::after {
+  opacity: 0;
+}
+
+/* ============ ПЛАВНОСТЬ ============ */
+
+/* Smooth scroll для якорных ссылок */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Улучшенный easing для всех переходов */
+:root {
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Плавное появление блоков при скролле */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Задержка для каскадного появления */
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Плавный flip карточек */
+.flip-card-inner {
+  transition: transform 0.8s var(--ease-smooth);
+}
+
+/* Плавное раскрытие текста */
+.lyrics {
+  transition: max-height 0.8s var(--ease-smooth);
+}
+
+/* Плавный hover для всех интерактивных элементов */
+.btn, .buy, .track, .service, .related-track, nav a, .socials a {
+  transition: all 0.4s var(--ease-smooth);
+}
+
+/* Плавная анимация росчерка */
+.track .bc::after {
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+/* Плавный sweep на обложке трека */
+@keyframes sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.track-cover::before {
+  animation: sweep 4s var(--ease-smooth) infinite;
+}
+
+/* Плавное появление hero */
+.hero .wrap > * {
+  animation: fadeInUp 0.8s var(--ease-out) backwards;
+}
+
+.hero .tag { animation-delay: 0.1s; }
+.hero h1 { animation-delay: 0.2s; }
+.hero p { animation-delay: 0.4s; }
+.hero .cta { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Плавная пульсация для индикаторов */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Плавный fade для секций */
+section {
+  animation: fadeIn 0.6s var(--ease-out);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

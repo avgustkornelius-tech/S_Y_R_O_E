@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЦЕХ — СЫРОЕ</title>
+<meta name="description" content="ЦЕХ. Трек проекта СЫРОЕ. Андеграунд из цеха. Купить WAV + текст.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Дополнительные стили только для страницы трека */
+.back {
+  display: inline-block;
+  margin: 30px 0 20px;
+  color: var(--muted);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: 0.3s;
+}
+.back:hover {
+  color: var(--accent);
+}
+.back::before {
+  content: '← ';
+}
+
+.track-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.track-cover {
+  aspect-ratio: 1 / 1;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0 2px, transparent 2px 8px),
+    #111;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(120px, 20vw, 200px);
+  color: rgba(255, 107, 53, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.track-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 48%, rgba(255, 107, 53, 0.5) 49.5%, transparent 51%);
+  animation: sweep 3s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+.track-info h1 {
+  font-size: clamp(50px, 8vw, 90px);
+  line-height: 0.9;
+  margin-bottom: 12px;
+}
+
+.track-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.track-tags span {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+
+.track-tags span.accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.track-desc {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 30px;
+  max-width: 480px;
+}
+
+.buy-block {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  margin-bottom: 30px;
+}
+
+.buy-block .price {
+  font-size: 36px;
+  color: var(--accent);
+}
+
+.buy-block .btn {
+  flex-shrink: 0;
+}
+
+.tech-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.spec {
+  padding: 14px;
+  background: rgba(26, 26, 26, 0.5);
+  border: 1px solid var(--border);
+}
+
+.spec-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.spec-value {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.player-section {
+  margin-bottom: 60px;
+}
+
+.player-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 20px;
+  aspect-ratio: 16 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.lyrics-section {
+  margin-bottom: 60px;
+}
+
+.lyrics {
+  max-width: 640px;
+  padding: 40px;
+  background: var(--card);
+  border-left: 4px solid var(--accent);
+  font-size: 15px;
+  line-height: 2;
+}
+
+.lyrics .verse {
+  margin-bottom: 30px;
+}
+
+.lyrics .verse-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.lyrics .hook {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.related {
+  margin-bottom: 60px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.related-track {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 20px;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.related-track:hover {
+  border-color: var(--accent);
+}
+
+.related-track .letter {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 60px;
+  color: rgba(255, 107, 53, 0.3);
+  margin-bottom: 10px;
+}
+
+.related-track h3 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.related-track .price {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .track-detail {
+    grid-template-columns: 1fr;
+  }
+  
+  .lyrics {
+    padding: 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="index.html" class="logo">СЫР<b>О</b>Е</a>
+    <nav>
+      <a href="index.html#tracks">Треки</a>
+      <a href="index.html#services">Услуги</a>
+      <a href="index.html#tseh">Цех</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <a href="index.html#tracks" class="back">к списку треков</a>
+  
+  <!-- ОСНОВНОЙ БЛОК ТРЕКА -->
+  <section class="track-detail">
+    <div class="track-cover">Ц</div>
+    <div class="track-info">
+      <h1>ЦЕХ</h1>
+      <div class="track-tags">
+        <span class="accent">жёсткий</span>
+        <span>индастриал</span>
+        <span>2026</span>
+      </div>
+      <p class="track-desc">
+        Первый трек из короба. Звук молота по металлу, дыхание и правда.
+        Записан с первого дубля без автотюна. Здесь не пишут — здесь куют.
+      </p>
+      
+      <div class="buy-block">
+        <span class="price">100 ₽</span>
+        <a href="https://syroe.bandcamp.com/track/ceh" class="btn btn-primary">купить wav + текст</a>
+      </div>
+      
+      <div class="tech-specs">
+        <div class="spec">
+          <div class="spec-label">бит</div>
+          <div class="spec-value">СЫРОЕ</div>
+        </div>
+        <div class="spec">
+          <div class="spec-label">запись</div>
+          <div class="spec-value">короб №1</div>
+        </div>
+        <div class="spec">
+          <div class="spec-label">дубль</div>
+          <div class="spec-value">первый</div>
+        </div>
+        <div class="spec">
+          <div class="spec-label">формат</div>
+          <div class="spec-value">wav / mp3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ПЛЕЕР -->
+  <section class="player-section">
+    <h2>Слушать</h2>
+    <div class="player-wrap">
+      <!-- ВСТАВЬ СЮДА IFRAME BANDCAMP ИЛИ HTML5 AUDIO -->
+      здесь будет плеер
+    </div>
+  </section>
+  
+  <!-- ТЕКСТ -->
+  <section class="lyrics-section">
+    <h2>Текст</h2>
+    <div class="lyrics">
+      <div class="verse">
+        <div class="verse-label">// куплет 1</div>
+        Стены в побелке, пол в мазуте,<br>
+        Руки в стружке, мысли в путах.<br>
+        Здесь не пишут — здесь куют,<br>
+        Каждый такт как удар по металлу.<br><br>
+        
+        Гудок зовёт, но я не с теми,<br>
+        Кто греет руки на чужом огне.<br>
+        Мой голос — ржавый гвоздь в стене,<br>
+        Мой звук — сырой, как правда в темноте.
+      </div>
+      
+      <div class="verse">
+        <div class="verse-label">// хук</div>
+        <span class="hook">
+          Цех. Не лейбл, не стартап.<br>
+          Цех. Каждый день — как раб.<br>
+          Цех. Без настроения и без разрешения.<br>
+          Цех. Только дело и терпение.
+        </span>
+      </div>
+      
+      <div class="verse">
+        <div class="verse-label">// куплет 2</div>
+        ИИ нарисовал мне сайт,<br>
+        Но я его разбираю сам.<br>
+        Каждый тег, каждая кнопка,<br>
+        Каждый пиксель — мой шрам.<br><br>
+        
+        Короб из термобокса,<br>
+        Микрофон в прорези,<br>
+        Смартфон через OTG —<br>
+        Моя студия на окраине.
+      </div>
+    </div>
+  </section>
+  
+  <!-- ДРУГИЕ ТРЕКИ -->
+  <section class="related">
+    <h2>Другие треки</h2>
+    <div class="sub">// из того же цеха</div>
+    <div class="related-grid">
+      
+      <a href="track-smena.html" class="related-track">
+        <div class="letter">С</div>
+        <h3>СМЕНА ОКОНЧЕНА</h3>
+        <span class="price">100 ₽</span>
+      </a>
+      
+      <a href="track-volk.html" class="related-track">
+        <div class="letter">В</div>
+        <h3>ВОЛК</h3>
+        <span class="price">100 ₽</span>
+      </a>
+      
+      <a href="track-plastilin.html" class="related-track">
+        <div class="letter">П</div>
+        <h3>ПЛАСТИЛИН</h3>
+        <span class="price">100 ₽</span>
+      </a>
+      
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="socials">
+      <a href="https://syroe.bandcamp.com">Bandcamp</a>
+      <a href="https://t.me/syroe">Telegram</a>
+      <a href="https://vk.com/syroe">VK</a>
+    </div>
+    <span class="copyright">СЫРОЕ © 2026 · сделано в цехе</span>
+  </div>
+</footer>
+
+</body>
+</html>

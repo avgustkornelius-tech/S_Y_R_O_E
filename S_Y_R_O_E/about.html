@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цех — СЫРОЕ</title>
+<meta name="description" content="Цех СЫРОЕ. История, манифест, короб. Андеграунд без глянца.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.about-hero {
+  padding: 80px 0 40px;
+  text-align: center;
+}
+
+.about-hero h1 {
+  font-size: clamp(60px, 12vw, 140px);
+  line-height: 0.9;
+  margin-bottom: 20px;
+}
+
+.about-hero h1 b {
+  color: var(--accent);
+  font-weight: 400;
+}
+
+.about-hero .sub {
+  margin-bottom: 0;
+}
+
+.about-section {
+  margin-bottom: 80px;
+}
+
+.about-section h2 {
+  font-size: clamp(36px, 6vw, 56px);
+  margin-bottom: 20px;
+}
+
+.about-section h2::before {
+  content: '// ';
+  color: var(--accent);
+}
+
+.about-text {
+  max-width: 720px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.about-text p {
+  margin-bottom: 20px;
+}
+
+.about-text b {
+  color: var(--text);
+}
+
+.about-text .accent {
+  color: var(--accent);
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.photo-placeholder {
+  aspect-ratio: 4 / 3;
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 8px),
+    #111;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.tech-list {
+  max-width: 720px;
+  margin-top: 30px;
+}
+
+.tech-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.tech-item .label {
+  color: var(--muted);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.tech-item .value {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.principle-card {
+  padding: 30px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+}
+
+.principle-card .num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.principle-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.principle-card p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.timeline {
+  max-width: 720px;
+  margin-top: 30px;
+}
+
+.timeline-item {
+  padding-left: 30px;
+  border-left: 2px solid var(--border);
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.timeline-item .date {
+  font-size: 12px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+
+.timeline-item h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.timeline-item p {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.cta-section {
+  text-align: center;
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
+}
+
+.cta-section h2 {
+  font-size: clamp(32px, 5vw, 48px);
+  margin-bottom: 12px;
+}
+
+.cta-section p {
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="index.html" class="logo">СЫР<b>О</b>Е</a>
+    <nav>
+      <a href="index.html#tracks">Треки</a>
+      <a href="index.html#services">Услуги</a>
+      <a href="index.html#tseh">Цех</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  
+  <!-- HERO -->
+  <section class="about-hero">
+    <h1>Ц<b>Е</b>Х</h1>
+    <div class="sub">// история · манифест · короб</div>
+  </section>
+  
+  <!-- МАНИФЕСТ -->
+  <section class="about-section">
+    <h2>Манифест</h2>
+    <div class="about-text">
+      <p>
+        <b>СЫРОЕ</b> — это не лейбл. Не бренд. Не стартап.
+        Это <span class="accent">цех</span>. Место, где из подручного материала
+        собирается звук, код и дело.
+      </p>
+      <p>
+        Здесь нет глянца. Нет автотюна наглазку. Нет продюсеров,
+        которые говорят "давай сделаем коммерчески". Здесь только
+        <b>первый дубль</b>, <b>честный звук</b> и <b>работа каждый день</b>.
+      </p>
+      <p>
+        Андеграунд — это не жанр. Это <span class="accent">позиция</span>:
+        делать по-своему, из того что было, без разрешения.
+      </p>
+    </div>
+  </section>
+  
+  <!-- ИСТОРИЯ КОРОБА -->
+  <section class="about-section">
+    <h2>Короб</h2>
+    <div class="about-text">
+      <p>
+        Студии не было. Деньги на аренду — тоже. Но был <b>термобокс</b>,
+        поролон, поп-фильтр и смартфон с OTG-адаптером.
+      </p>
+      <p>
+        Я собрал <span class="accent">вокальную кабину из короба</span>:
+        прорезь для микрофона, звукоизоляция из поролоновых ромбиков,
+        цепочка для подвеса. H4 внутри, управление снаружи.
+      </p>
+      <p>
+        Это не студия. Это <b>инструмент</b>, собранный руками.
+        И он пишет звук честнее, чем многие кабинеты за миллионы.
+      </p>
+    </div>
+    
+    <div class="photo-grid">
+      <div class="photo-placeholder">фото короба снаружи</div>
+      <div class="photo-placeholder">фото короба внутри</div>
+      <div class="photo-placeholder">h4 в коробе</div>
+    </div>
+  </section>
+  
+  <!-- ТЕХНИЧЕСКИЕ ДЕТАЛИ -->
+  <section class="about-section">
+    <h2>Что внутри</h2>
+    <div class="about-text">
+      <p>Технические детали цеха. Без секретов, но и без лишних слов.</p>
+    </div>
+    
+    <div class="tech-list">
+      <div class="tech-item">
+        <span class="label">микрофон</span>
+        <span class="value">Zoom H4 (встроенный)</span>
+      </div>
+      <div class="tech-item">
+        <span class="label">кабина</span>
+        <span class="value">термобокс + поролон</span>
+      </div>
+      <div class="tech-item">
+        <span class="label">подвес</span>
+        <span class="value">цепочка + карабины</span>
+      </div>
+      <div class="tech-item">
+        <span class="label">запись</span>
+        <span class="value">смартфон через OTG</span>
+      </div>
+      <div class="tech-item">
+        <span class="label">софт</span>
+        <span class="value">BandLab</span>
+      </div>
+      <div class="tech-item">
+        <span class="label">поп-фильтр</span>
+        <span class="value">в прорези короба</span>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ПРИНЦИПЫ -->
+  <section class="about-section">
+    <h2>Принципы</h2>
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="num">01</div>
+        <h3>Первый дубль</h3>
+        <p>Не полируем до бесконечности. Берём честный звук с первого раза.</p>
+      </div>
+      <div class="principle-card">
+        <div class="num">02</div>
+        <h3>Из того что было</h3>
+        <p>Нет денег на студию? Собираем из короба. Нет битмейкера? Делаем сами.</p>
+      </div>
+      <div class="principle-card">
+        <div class="num">03</div>
+        <h3>Без разрешения</h3>
+        <p>Не ждём одобрения лейблов, продюсеров, аудитории. Делаем и выкладываем.</p>
+      </div>
+      <div class="principle-card">
+        <div class="num">04</div>
+        <h3>Каждый день</h3>
+        <p>Цех не закрывается. Трек, бит, строчка кода — хотя бы шаг в день.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ИСТОРИЯ ПРОЕКТА -->
+  <section class="about-section">
+    <h2>История</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="date">2026 · начало</div>
+        <h3>Идея</h3>
+        <p>Решил записывать андеграунд без студии. Начал с поиска решений.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">2026 · коробка</div>
+        <h3>Короб</h3>
+        <p>Собрал вокальную кабину из термобокса. Протестировал звук.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">2026 · сайт</div>
+        <h3>Сайт</h3>
+        <p>Собрал сайт-магазин своими руками. ИИ помогал, но код разбираю сам.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">2026 · запуск</div>
+        <h3>Первые треки</h3>
+        <p>Записал и выложил первые треки: ЦЕХ, СМЕНА ОКОНЧЕНА, ВОЛК, ПЛАСТИЛИН.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Работай с цехом</h2>
+    <p>Треки, биты, запись — всё напрямую, без посредников.</p>
+    <div class="cta-buttons">
+      <a href="index.html#tracks" class="btn btn-primary">слушать треки</a>
+      <a href="order.html" class="btn btn-ghost">заказать</a>
+    </div>
+  </section>
+  
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="socials">
+      <a href="https://syroe.bandcamp.com">Bandcamp</a>
+      <a href="https://t.me/syroe">Telegram</a>
+      <a href="https://vk.com/syroe">VK</a>
+    </div>
+    <span class="copyright">СЫРОЕ © 2026 · сделано в цехе</span>
+  </div>
+</footer>
+
+</body>
+</html>

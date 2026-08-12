@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Заказ — СЫРОЕ</title>
+<meta name="description" content="Закажи бит, фит или запись в коробе. Проект СЫРОЕ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Стили только для страницы заказа */
+.wizard {
+  max-width: 720px;
+  margin: 40px auto 60px;
+}
+
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-indicator {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.step-dot {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  transition: 0.3s;
+}
+
+.step-dot.active {
+  background: var(--accent);
+}
+
+.step h2 {
+  font-size: clamp(32px, 5vw, 48px);
+  margin-bottom: 8px;
+}
+
+.step .sub {
+  margin-bottom: 30px;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.option-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  padding: 24px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.option-card:hover {
+  border-color: var(--accent);
+}
+
+.option-card.selected {
+  border-color: var(--accent);
+  background: rgba(255, 107, 53, 0.08);
+}
+
+.option-card .icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.option-card h3 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.option-card .price {
+  font-size: 16px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.tag-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag-option {
+  padding: 10px 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 13px;
+}
+
+.tag-option:hover {
+  border-color: var(--accent);
+}
+
+.tag-option.selected {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.wizard-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.wizard-nav .btn {
+  min-width: 140px;
+}
+
+.btn-back {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.btn-back:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+/* Итог */
+.result-message {
+  background: var(--card);
+  border-left: 4px solid var(--accent);
+  padding: 30px;
+  margin-bottom: 30px;
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.process-section {
+  margin-top: 80px;
+  padding-top: 60px;
+  border-top: 1px solid var(--border);
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.process-step {
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.process-step .num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.process-step h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.process-step p {
+  font-size: 13px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="index.html" class="logo">СЫР<b>О</b>Е</a>
+    <nav>
+      <a href="index.html#tracks">Треки</a>
+      <a href="index.html#services">Услуги</a>
+      <a href="index.html#tseh">Цех</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="wizard">
+    
+    <!-- Индикатор шагов -->
+    <div class="step-indicator">
+      <div class="step-dot active" data-step="1"></div>
+      <div class="step-dot" data-step="2"></div>
+      <div class="step-dot" data-step="3"></div>
+      <div class="step-dot" data-step="4"></div>
+    </div>
+    
+    <!-- ШАГ 1: Выбор услуги -->
+    <div class="step active" data-step="1">
+      <h2>Что заказываешь?</h2>
+      <div class="sub">// выбери одно</div>
+      
+      <div class="option-grid">
+        <div class="option-card" data-service="Бит под заказ" data-price="от 2000 ₽">
+          <div class="icon">🎹</div>
+          <h3>Бит</h3>
+          <span class="price">от 2000 ₽</span>
+        </div>
+        
+        <div class="option-card" data-service="Фит" data-price="от 3000 ₽">
+          <div class="icon">🎤</div>
+          <h3>Фит</h3>
+          <span class="price">от 3000 ₽</span>
+        </div>
+        
+        <div class="option-card" data-service="Запись в коробе" data-price="от 1500 ₽">
+          <div class="icon">📦</div>
+          <h3>Запись</h3>
+          <span class="price">от 1500 ₽</span>
+        </div>
+      </div>
+      
+      <div class="wizard-nav">
+        <span></span>
+        <button class="btn btn-primary" onclick="nextStep()">дальше →</button>
+      </div>
+    </div>
+    
+    <!-- ШАГ 2: Детали -->
+    <div class="step" data-step="2">
+      <h2>Детали</h2>
+      <div class="sub">// расскажи, что нужно</div>
+      
+      <div class="form-group">
+        <label>Настроение / стиль</label>
+        <div class="tag-options">
+          <div class="tag-option" data-tag="жёсткий">жёсткий</div>
+          <div class="tag-option" data-tag="мрачный">мрачный</div>
+          <div class="tag-option" data-tag="лоу-фай">лоу-фай</div>
+          <div class="tag-option" data-tag="индастриал">индастриал</div>
+          <div class="tag-option" data-tag="лирика">лирика</div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Опиши задачу (опционально)</label>
+        <textarea id="details" placeholder="Темп, референсы, срок, особые пожелания..."></textarea>
+      </div>
+      
+      <div class="wizard-nav">
+        <button class="btn btn-back" onclick="prevStep()">← назад</button>
+        <button class="btn btn-primary" onclick="nextStep()">дальше →</button>
+      </div>
+    </div>
+    
+    <!-- ШАГ 3: Контакт -->
+    <div class="step" data-step="3">
+      <h2>Как с тобой связаться?</h2>
+      <div class="sub">// оставь контакт</div>
+      
+      <div class="form-group">
+        <label>Имя / ник</label>
+        <input type="text" id="contact-name" placeholder="Как к тебе обращаться">
+      </div>
+      
+      <div class="form-group">
+        <label>Telegram или VK</label>
+        <input type="text" id="contact-link" placeholder="@username или ссылка на VK">
+      </div>
+      
+      <div class="wizard-nav">
+        <button class="btn btn-back" onclick="prevStep()">← назад</button>
+        <button class="btn btn-primary" onclick="generateMessage()">сформировать заказ</button>
+      </div>
+    </div>
+    
+    <!-- ШАГ 4: Итог -->
+    <div class="step" data-step="4">
+      <h2>Заказ готов</h2>
+      <div class="sub">// скопируй и отправь в Telegram</div>
+      
+      <div class="result-message" id="result"></div>
+      
+      <div class="wizard-nav">
+        <button class="btn btn-back" onclick="prevStep()">← изменить</button>
+        <a href="https://t.me/syroe" target="_blank" class="btn btn-primary">открыть telegram</a>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- ЭТАПЫ РАБОТЫ -->
+  <section class="process-section">
+    <h2>Как происходит работа</h2>
+    <div class="sub">// четыре шага от заявки до результата</div>
+    
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="num">01</div>
+        <h3>Заявка</h3>
+        <p>Ты присылаешь описание задачи в Telegram. Обсуждаем детали.</p>
+      </div>
+      
+      <div class="process-step">
+        <div class="num">02</div>
+        <h3>Предоплата</h3>
+        <p>50% вперёд. Остальное после сдачи работы.</p>
+      </div>
+      
+      <div class="process-step">
+        <div class="num">03</div>
+        <h3>Работа</h3>
+        <p>Делаю в цехе. Присылаю промежуточные версии на согласование.</p>
+      </div>
+      
+      <div class="process-step">
+        <div class="num">04</div>
+        <h3>Сдача</h3>
+        <p>Отдаю файлы в нужном формате. Правки в течение 3 дней.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="socials">
+      <a href="https://syroe.bandcamp.com">Bandcamp</a>
+      <a href="https://t.me/syroe">Telegram</a>
+      <a href="https://vk.com/syroe">VK</a>
+    </div>
+    <span class="copyright">СЫРОЕ © 2026 · сделано в цехе</span>
+  </div>
+</footer>
+
+<script>
+let currentStep = 1;
+const totalSteps = 4;
+
+let order = {
+  service: '',
+  price: '',
+  tags: [],
+  details: '',
+  name: '',
+  contact: ''
+};
+
+// Выбор услуги
+document.querySelectorAll('.option-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    order.service = card.dataset.service;
+    order.price = card.dataset.price;
+  });
+});
+
+// Выбор тегов
+document.querySelectorAll('.tag-option').forEach(tag => {
+  tag.addEventListener('click', () => {
+    tag.classList.toggle('selected');
+    const value = tag.dataset.tag;
+    if (order.tags.includes(value)) {
+      order.tags = order.tags.filter(t => t !== value);
+    } else {
+      order.tags.push(value);
+    }
+  });
+});
+
+function nextStep() {
+  if (currentStep === 1 && !order.service) {
+    alert('Выбери услугу');
+    return;
+  }
+  
+  if (currentStep < totalSteps) {
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+    currentStep++;
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+    updateIndicator();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+    currentStep--;
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+    updateIndicator();
+  }
+}
+
+function updateIndicator() {
+  document.querySelectorAll('.step-dot').forEach((dot, index) => {
+    if (index < currentStep) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+}
+
+function generateMessage() {
+  order.details = document.getElementById('details').value || 'Не указано';
+  order.name = document.getElementById('contact-name').value || 'Не указано';
+  order.contact = document.getElementById('contact-link').value || 'Не указан';
+  
+  const tagsText = order.tags.length > 0 ? order.tags.join(', ') : 'Не выбрано';
+  
+  const message = `ЗАКАЗ · СЫРОЕ
+
+Услуга: ${order.service}
+Цена: ${order.price}
+Стиль: ${tagsText}
+Детали: ${order.details}
+
+Контакт: ${order.name}
+Связь: ${order.contact}`;
+  
+  document.getElementById('result').textContent = message;
+  nextStep();
+}
+</script>
+
+</body>
+</html>
